@@ -1,4 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled, { css } from "styled-components";
+
+interface ButtonProps{
+  size?:"small" | "medium" | "large";
+  variation?:"primary" | "secondary" | "danger";
+}
 
 const sizes = {
   small: css`
@@ -47,3 +53,20 @@ const variations = {
     }
   `,
 };
+
+const Button = styled.button<ButtonProps>`
+  ${props => css`
+    ${props.size && sizes[props.size]}
+    ${props.variation && variations[props.variation]}
+  `}
+  
+  border:none;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor:pointer; 
+
+  &:hover{
+    background-color: var(--color-brand-700);
+  }
+`
+export default Button;
