@@ -11,7 +11,6 @@ import GlobalStyles from "./styles/GlobalStyle";
 import AppLayout from "./ui/AppLayout";
 
 function App() {
-  console.log(import.meta.env)
   return (
     <>
       <GlobalStyles />
