@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import CabinRow from "./CabinRow";
+import type { cabinType } from "../../types/cabinType";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -23,3 +25,21 @@ const TableHeader = styled.header`
   color: var(--color-grey-600);
   padding: 1.6rem 2.4rem;
 `;
+
+function CabinTable({cabins}: {cabins:cabinType[]}) {
+  return (
+    <Table role="table">
+      <TableHeader role="row">
+        <div></div>
+        <div>Cabin</div>
+        <div>Capacity</div>
+        <div>Price</div>
+        <div>Discount</div>
+        <div></div>
+      </TableHeader>
+      {cabins.map(cabin => <CabinRow cabin={cabin} key={cabin.id} />)}
+    </Table>
+  )
+}
+
+export default CabinTable
