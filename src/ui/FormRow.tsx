@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 interface FormRowTypes{
   label:string,
-  error: string,
-  children: React.ReactNode,
+  error?: string,
+  children: React.ReactElement<{id:string}>,
 }
 
 const StyledFormRow = styled.div`
@@ -41,14 +41,14 @@ const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
-function FormRow({label, error, children}: FormRowTypes) {
+function FormRowx({label, error, children}: FormRowTypes) {
   return (
     <StyledFormRow>
-        <Label htmlFor="name">{label}</Label>
+        {label && <Label htmlFor={(children).props.id}>{label}</Label>}
         {children}
         {error && <Error>{error}</Error>}
       </StyledFormRow>
   )
 }
 
-export default FormRow
+export default FormRowx

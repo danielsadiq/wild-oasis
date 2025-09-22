@@ -63,6 +63,7 @@ const Button = styled.button<ButtonProps>`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
   cursor:pointer; 
+  padding: 1.2rem 1.6rem;
 
   &:hover{
     background-color: var(--color-brand-700);
