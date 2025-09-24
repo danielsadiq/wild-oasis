@@ -116,7 +116,7 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormType) {
           Cancel
         </Button>
         <Button disabled={isCreating}>
-          {isEditSession ? "Add Cabin" : "Create cabin"}
+          {isEditSession ? "Edit Cabin" : "Create cabin"}
         </Button>
       </SpecialFormRow>
     </Form>
