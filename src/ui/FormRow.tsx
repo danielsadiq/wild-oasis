@@ -1,13 +1,12 @@
-import type { ReactElement } from "react";
 import styled from "styled-components";
 
 interface FormRowTypes{
   label?:string,
   error?: string,
-  children: React.ReactNode,
+  children: React.ReactElement<{id:string}>,
 }
 
-const StyledFormRow = styled.div`
+export const StyledFormRow = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
@@ -45,7 +44,7 @@ const Error = styled.span`
 function FormRow({label, error, children}: FormRowTypes) {
   return (
     <StyledFormRow>
-        {label && <Label htmlFor={(children as ReactElement)?.props?.id}>{label}</Label>}
+        {label && <Label htmlFor={(children).props.id}>{label}</Label>}
         {children}
         {error && <Error>{error}</Error>}
       </StyledFormRow>
@@ -53,3 +52,6 @@ function FormRow({label, error, children}: FormRowTypes) {
 }
 
 export default FormRow
+
+
+
