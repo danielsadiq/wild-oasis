@@ -32,7 +32,6 @@ function CreateCabinForm({ cabinToEdit }: CreateCabinFormType) {
   const isWorking = isCreating || isEditing
 
   function onSubmit(data: FormInputType) {
-    console.log(data.image)
     if (isEditSession) editCabin({newCabin: data, id:editId}, {
       onSuccess: ()=>reset()
     })
