@@ -2,10 +2,10 @@ import {supabase} from "./supabase";
 
 interface SettingType{
   created_at?: string,
-  minBookingLength: number,
-  maxBookingLength: number,
-  maxGuestsPerBooking: number,
-  breakfastPrice: number,
+  minBookingLength?: number,
+  maxBookingLength?: number,
+  maxGuestsPerBooking?: number,
+  breakfastPrice?: number,
 }
 
 export async function getSettings() {
