@@ -1,8 +1,8 @@
-import { cloneElement, createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import type { ReactNode, ReactElement } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
+import { useOutClick } from "./useOutClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -81,24 +81,7 @@ function Open({children, opens: opensWindowName}: {children: ReactElement<any>, 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Window({children, name}: {children: ReactElement<any>, name: string}){
   const {openName, close} = useContext(ModalContext);
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleEscape = useCallback((e: KeyboardEvent) =>{
-    if (e.key === 'Escape') close();
-  }, [close])
-  const handleClick = useCallback((e: MouseEvent)=>{
-    if (ref.current && !ref.current.contains(e.target as Node)) close();
-  }, [close]);
-
-  useEffect(()=>{
-    // The true allows the event to be captured in the capturing phase (as the event moves down the tree)
-    document.addEventListener('click', handleClick, true);
-    document.addEventListener('keydown', handleEscape, true);
-    return ()=> {
-      document.removeEventListener('click', handleClick, true);
-      document.removeEventListener('keydown', handleEscape, true);
-    }
-  }, [close, handleClick, handleEscape]);
+  const ref = useOutClick(close);
 
   if (name !== openName) return null
   else return createPortal(
