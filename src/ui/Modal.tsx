@@ -59,7 +59,6 @@ interface ModalContextType {
 }
 const ModalContext = createContext({} as ModalContextType);
 
-// React portal
 function Modal({children}: {children: ReactNode}) {
   const [openName, setOpenName] = useState("");
   const close = () => setOpenName("");
@@ -83,6 +82,10 @@ function Open({children, opens: opensWindowName}: {children: ReactElement<any>, 
 function Window({children, name}: {children: ReactElement<any>, name: string}){
   const {openName, close} = useContext(ModalContext);
   const ref = useRef<HTMLDivElement>(null);
+
+  const handleEscape = useCallback((e: KeyboardEvent) =>{
+    if (e.key === 'Escape') close();
+  }, [close])
   const handleClick = useCallback((e: MouseEvent)=>{
     if (ref.current && !ref.current.contains(e.target as Node)) close();
   }, [close]);
@@ -90,10 +93,12 @@ function Window({children, name}: {children: ReactElement<any>, name: string}){
   useEffect(()=>{
     // The true allows the event to be captured in the capturing phase (as the event moves down the tree)
     document.addEventListener('click', handleClick, true);
+    document.addEventListener('keydown', handleEscape, true);
     return ()=> {
-      document.removeEventListener('click', handleClick)
+      document.removeEventListener('click', handleClick, true);
+      document.removeEventListener('keydown', handleEscape, true);
     }
-  }, [close, handleClick]);
+  }, [close, handleClick, handleEscape]);
 
   if (name !== openName) return null
   else return createPortal(
