@@ -88,11 +88,13 @@ function Window({children, name}: {children: ReactElement<any>, name: string}){
   }, [close]);
 
   useEffect(()=>{
-    document.addEventListener('click', handleClick);
+    // The true allows the event to be captured in the capturing phase (as the event moves down the tree)
+    document.addEventListener('click', handleClick, true);
     return ()=> {
       document.removeEventListener('click', handleClick)
     }
-  }, [close, handleClick])
+  }, [close, handleClick]);
+
   if (name !== openName) return null
   else return createPortal(
     <Overlay>
