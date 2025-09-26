@@ -1,4 +1,4 @@
-import { cloneElement, createContext, useContext, useState } from "react";
+import { cloneElement, createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import type { ReactNode, ReactElement } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
@@ -82,10 +82,21 @@ function Open({children, opens: opensWindowName}: {children: ReactElement<any>, 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Window({children, name}: {children: ReactElement<any>, name: string}){
   const {openName, close} = useContext(ModalContext);
+  const ref = useRef<HTMLDivElement>(null);
+  const handleClick = useCallback((e: MouseEvent)=>{
+    if (ref.current && !ref.current.contains(e.target as Node)) close();
+  }, [close]);
+
+  useEffect(()=>{
+    document.addEventListener('click', handleClick);
+    return ()=> {
+      document.removeEventListener('click', handleClick)
+    }
+  }, [close, handleClick])
   if (name !== openName) return null
   else return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}>
         <Button onClick={close}><HiXMark/></Button>
         <div>{cloneElement(children, {
           onCloseModal: close
