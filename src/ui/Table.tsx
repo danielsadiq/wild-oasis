@@ -88,7 +88,10 @@ function Row({children}: {children: ReactNode}){
   </StyledRow>
 
 }
-function Body({children}: {children: ReactNode}){}
+function Body<T>({data, render}: {data?: T[], render: (item: T)=>ReactNode}){
+  if (!data || data.length === 0) return <Empty>No data to show at the moment</Empty>
+  return <StyledBody>{data.map(render)}</StyledBody>
+}
 
 Table.Header = Header;
 Table.Row = Row;
